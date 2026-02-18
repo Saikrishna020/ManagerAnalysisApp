@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import os
+from io import BytesIO
 
 st.set_page_config(page_title="Manager Case Analysis", layout="centered")
 
@@ -50,18 +50,18 @@ if uploaded_file and analysis_type:
         st.subheader(f"🔹 {report_col} Cases")
         st.dataframe(other_cases)
 
-        # Export to Excel
-        with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
+        # Export to Excel (in-memory for cloud deployment)
+        buffer = BytesIO()
+        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
             manager_cases.to_excel(writer, sheet_name="Manager Cases", index=False)
             other_cases.to_excel(writer, sheet_name=f"{report_col} Cases", index=False)
 
-        with open(output_file, "rb") as f:
-            st.download_button(
-                label="📥 Download Analysis Report",
-                data=f,
-                file_name=output_file,
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
+        st.download_button(
+            label="📥 Download Analysis Report",
+            data=buffer.getvalue(),
+            file_name=output_file,
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
     except Exception as e:
         st.error(f"Something went wrong: {e}")
