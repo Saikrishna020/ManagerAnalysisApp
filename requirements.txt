@@ -2,3 +2,13 @@ flask
 pandas
 openpyxl
 gunicorn
+fastapi
+uvicorn
+gitpython
+pyyaml
+langchain
+langchain-community>=0.3.27
+langchain-chroma
+chromadb
+pydantic
+pytest
