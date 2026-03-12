@@ -254,7 +254,7 @@ class FileParser:
         """Extract metadata from JavaScript/TypeScript files."""
         content = metadata.content
 
-        imports = re.findall(r"(?:require|from)\s*\(\s*['\"]([^'\"]+)", content)
+        imports = re.findall(r"require\s*\(\s*['\"]([^'\"]+)", content)
         imports += re.findall(r"from\s+['\"]([^'\"]+)", content)
         metadata.imports.extend(list(set(imports)))
 
