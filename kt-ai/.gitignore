@@ -8,3 +8,8 @@ build/
 *.xlsx
 venv/
 .venv/
+chroma_db/
+generated_docs/
+*.log
+.pytest_cache/
+node_modules/
